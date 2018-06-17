@@ -10,6 +10,8 @@
         {% block navbar %}
             {% include 'core/navbar.tpl' %}
         {% endblock %}
+        {% block sidebar %}
+        {% endblock %}
         <br>
         <div class="container-fluid">
             {% block content %}

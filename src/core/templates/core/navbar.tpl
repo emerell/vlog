@@ -1,6 +1,8 @@
 <nav class="navbar navbar-dark bg-primary">
     <span class="navbar-text">
-        <a class="navbar-brand" href="{{ url('vlog:index') }}">{{ _('Blog') }}</a>
+        <a class="navbar-brand" href="{{ url('vlog:index') }}">{{ _('Home') }}</a>
+        <a class="navbar-brand" href="{{ url('vlog:categories') }}">{{ _('Categories') }}</a>
+        <a class="navbar-brand" href="#">{{ _('Tags') }}</a>>
     </span>
     {% if user.is_authenticated %}
         <span class="navbar-text">

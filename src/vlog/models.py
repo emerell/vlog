@@ -16,7 +16,6 @@ class Publication(BaseModel):
 
     slug = models.CharField(
         max_length=150,
-        unique=True,
         blank=True,
         verbose_name=_('Slug')
     )
