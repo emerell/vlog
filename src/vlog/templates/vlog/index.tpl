@@ -4,7 +4,7 @@
 {% block sidebar %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">{{ _('Blog') }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ _('Блог') }}</li>
   </ol>
 </nav>
 {% endblock %}
@@ -12,7 +12,7 @@
     <h1>{{ _('Blog') }}</h1>
     <br><h4>The most populated categories:</h4>
     {% for category in categories %}
-        <h2><a href="categories/{{category.slug}}">{{ category.title }}</a></h2>
+        <h2><a href="/categories/{{category.slug}}">{{ category.title }}</a></h2>
         <hr>
     {% endfor %}
     <hr width="60%">

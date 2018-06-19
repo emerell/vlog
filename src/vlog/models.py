@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext as _
+from django.db.models import Count
 
 from ckeditor.fields import RichTextField
 
@@ -65,6 +66,10 @@ class Article(Publication):
         on_delete=models.SET_NULL,
         null=True
     )
+
+    @classmethod
+    def get_top(cls):
+        return cls.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')[:10]
 
     class Meta:
         db_table = 'article'

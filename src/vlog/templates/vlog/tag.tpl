@@ -13,7 +13,7 @@
 {% block content %}
     <h1>{{ tag.title }}</h1>
     <br>
-    {% for article in articles %}
+    {% for article in tag.articles.all() %}
         <h2>{{ article.title }}</a></h2>
         <hr>
     {% endfor %}

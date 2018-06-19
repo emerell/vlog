@@ -4,8 +4,8 @@
 {% block sidebar %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">{{ _('Blog') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ _('Categories') }}</li>
+    <li class="breadcrumb-item"><a href="/">{{ _('Блог') }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ _('Категории') }}</li>
   </ol>
 </nav>
 {% endblock %}

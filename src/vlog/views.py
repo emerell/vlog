@@ -3,6 +3,8 @@ from django.http import Http404
 from vlog.models import Category, Article, Tag
 from django.db.models import Count
 from core.views import BaseView
+from django.urls import reverse
+from django.utils.translation import gettext as _
 
 
 class IndexView(BaseView):
@@ -12,13 +14,13 @@ class IndexView(BaseView):
         context = super().get_context_data(**kwargs)
 
         top_categories = Category.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')[:3]
-        top_articles = Article.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')[:10]
         top_tags = Tag.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')[:10]
 
-        context.update({'categories': top_categories,
-                        'articles': top_articles,
-                        'tags': top_tags
-                        })
+        context.update({
+            'categories': top_categories,
+            'articles': Article.get_top(),
+            'tags': top_tags
+        })
         return self.render_to_response(context)
 
 
@@ -40,16 +42,26 @@ class CategoriesView(BaseView):
 class CategoryView(BaseView):
     template_name = 'vlog/category.tpl'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, slug, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        category = Category.objects.get(slug='slug')
-        articles = Article.objects.filter(category_id=category.id).annotate(comments_count=Count('comments'))\
-                .order_by('-comments_count')[:2]
+        crumbs = [
+            {'url': reverse('vlog:index'), 'title': _('Home')},
+            {'url': reverse('vlog:categories'), 'title': _('Categories')}
+        ]
+
+        category = get_object_or_404(Category, slug=slug)
+
+        articles = Article.objects.filter(
+            category_id=category.id
+        ).annotate(
+            comments_count=Count('comments')
+        ).order_by('-comments_count')[:2]
 
         context.update({
             'category': category,
             'articles': articles,
+            'crumbs': crumbs
         })
 
         return self.render_to_response(context)
@@ -76,7 +88,7 @@ class ArticleView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        article = Article.objects.get(id=kwargs.get('article_id'))
+        article = Article.objects.get(slug=kwargs.get('article_slug'))
 
         context.update({
             'article': article
@@ -110,18 +122,10 @@ class TagView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # tag = Tag.objects.get(id=kwargs.get('tag_id'))
-        # articles = Article.objects.filter(tag_id=tag.id).annotate(comments_count=Count('comments'))\
-        #     .order_by('-comments_count')
+        tag = Tag.objects.get(slug=kwargs.get('slug'))
 
-        try:
-            tag = Tag.objects.get(id=kwargs.get('slug'))
-        except Tag.DoesNotExist:
-            raise Http404("No Tag matches the given query.")
-        articles = Article.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')[:3]
         context.update({
-            'tag': tag,
-            'articles': articles,
+            'tag': tag
         })
 
         return self.render_to_response(context)
