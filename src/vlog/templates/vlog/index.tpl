@@ -12,7 +12,7 @@
     <h1>{{ _('Blog') }}</h1>
     <br><h4>The most populated categories:</h4>
     {% for category in categories %}
-        <h2><a href="{{ url('vlog:category') }}">{{ category.title }}</a></h2>
+        <h2><a href="categories/{{category.slug}}">{{ category.title }}</a></h2>
         <hr>
     {% endfor %}
     <hr width="60%">

@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+from django.http import Http404
 from vlog.models import Category, Article, Tag
 from django.db.models import Count
 from core.views import BaseView
@@ -41,9 +43,9 @@ class CategoryView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        category = Category.objects.get(id=kwargs.get('category_id'))
-        articles = Article.objects.filter(category_id=category.id).annotate(comments_count=Count('comment'))\
-                       .order_by('-comments_count')[:2]
+        category = Category.objects.get(slug='slug')
+        articles = Article.objects.filter(category_id=category.id).annotate(comments_count=Count('comments'))\
+                .order_by('-comments_count')[:2]
 
         context.update({
             'category': category,
@@ -108,11 +110,17 @@ class TagView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        tag = Tag.objects.get(id=kwargs.get('tag_id'))
-        articles = Article.objects.filter(tag_id=tag.id).annotate(comments_count=Count('comments'))\
-            .order_by('-comments_count')
+        # tag = Tag.objects.get(id=kwargs.get('tag_id'))
+        # articles = Article.objects.filter(tag_id=tag.id).annotate(comments_count=Count('comments'))\
+        #     .order_by('-comments_count')
 
+        try:
+            tag = Tag.objects.get(id=kwargs.get('slug'))
+        except Tag.DoesNotExist:
+            raise Http404("No Tag matches the given query.")
+        articles = Article.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')[:3]
         context.update({
+            'tag': tag,
             'articles': articles,
         })
 

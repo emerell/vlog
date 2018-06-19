@@ -4,8 +4,8 @@
 {% block sidebar %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ url('index') }}">{{ _('Blog') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('categories') }}">{{ _('Categories') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('vlog:index') }}">{{ _('Blog') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('vlog:categories') }}">{{ _('Categories') }}</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{ category.title }}</li>
   </ol>
 </nav>
@@ -14,7 +14,7 @@
     <h1>{{ category.title }}</h1>
     <br>
     {% for article in articles %}
-        <h2><a href="categories/{{ category.id}}/articles/{{ article.title }}/">{{ article.title }}</a></h2>
+        <h2><a href="categories/{{ category.title}}/articles/{{ article.title }}/">{{ article.title }}</a></h2>
         <hr>
     {% endfor %}
 {% endblock %}

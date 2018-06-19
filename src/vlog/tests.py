@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from vlog import models
+from vlog import views
 from vlog import forms
 
 
