@@ -1,7 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.http import Http404
 from vlog.models import Category, Article, Tag
-from django.db.models import Count
 from core.views import BaseView
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -13,13 +11,10 @@ class IndexView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        top_categories = Category.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')[:3]
-        top_tags = Tag.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')[:10]
-
         context.update({
-            'categories': top_categories,
-            'articles': Article.get_top(),
-            'tags': top_tags
+            'categories': Category.get_all()[:3],
+            'articles': Article.get_all()[:10],
+            'tags': Tag.get_all()[:10]
         })
         return self.render_to_response(context)
 
@@ -30,10 +25,13 @@ class CategoriesView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        categories = Category.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')
+        crumbs = [
+            {'url': reverse('vlog:index'), 'title': _('Блог')}
+        ]
 
         context.update({
-            'categories': categories
+            'categories': Category.get_all(),
+            'crumbs': crumbs
         })
 
         return self.render_to_response(context)
@@ -46,21 +44,16 @@ class CategoryView(BaseView):
         context = super().get_context_data(**kwargs)
 
         crumbs = [
-            {'url': reverse('vlog:index'), 'title': _('Home')},
-            {'url': reverse('vlog:categories'), 'title': _('Categories')}
+            {'url': reverse('vlog:index'), 'title': _('Блог')},
+            {'url': reverse('vlog:categories'), 'title': _('Категории')}
         ]
 
         category = get_object_or_404(Category, slug=slug)
 
-        articles = Article.objects.filter(
-            category_id=category.id
-        ).annotate(
-            comments_count=Count('comments')
-        ).order_by('-comments_count')[:2]
-
         context.update({
             'category': category,
-            'articles': articles,
+            'top_articles': Article.get_from_category(category)[:2],
+            'articles': Article.get_from_category(category),
             'crumbs': crumbs
         })
 
@@ -73,10 +66,14 @@ class ArticlesView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        articles = Article.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')
+        crumbs = [
+            {'url': reverse('vlog:index'), 'title': _('Блог')},
+            {'url': reverse('vlog:categories'), 'title': _('Категории')}
+        ]
 
         context.update({
-            'articles': articles
+            'articles': Article.get_all(),
+            'crumbs': crumbs
         })
 
         return self.render_to_response(context)
@@ -85,13 +82,21 @@ class ArticlesView(BaseView):
 class ArticleView(BaseView):
     template_name = 'vlog/article.tpl'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, article_slug, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        article = Article.objects.get(slug=kwargs.get('article_slug'))
+        article = get_object_or_404(Article, slug=article_slug)
+
+        crumbs = [
+            {'url': reverse('vlog:index'), 'title': _('Блог')},
+            {'url': reverse('vlog:categories'), 'title': _('Категории')},
+            {'url': reverse('vlog:articles'), 'title': _('Статьи')}
+        ]
 
         context.update({
-            'article': article
+            'article': article,
+            'crumbs': crumbs
+
         })
 
         return self.render_to_response(context)
@@ -103,29 +108,34 @@ class TagsView(BaseView):
     def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        tags = Tag.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')
-        top_articles = Article.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')[:3]
-
+        crumbs = [
+            {'url': reverse('vlog:index'), 'title': _('Блог')},
+        ]
         context.update({
-            'tags': tags,
-            'articles': top_articles
+            'tags': Tag.get_all(),
+            'articles': Article.get_all()[:3],
+            'crumbs': crumbs
         })
 
         return self.render_to_response(context)
-
-# list of articles with category (order by comments quantity)
 
 
 class TagView(BaseView):
     template_name = 'vlog/tag.tpl'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, slug, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        tag = Tag.objects.get(slug=kwargs.get('slug'))
+        crumbs = [
+            {'url': reverse('vlog:index'), 'title': _('Блог')},
+            {'url': reverse('vlog:tags'), 'title': _('Теги')}
+        ]
+
+        tag = get_object_or_404(Tag, slug=slug)
 
         context.update({
-            'tag': tag
+            'tag': tag,
+            'crumbs': crumbs
         })
 
         return self.render_to_response(context)

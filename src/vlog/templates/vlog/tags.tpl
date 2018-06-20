@@ -1,13 +1,9 @@
 {% extends 'core/base.tpl' %}
+{% import 'core/macros.tpl' as macro %}
 
 {% block title %}Tags{% endblock %}
 {% block sidebar %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">{{ _('Blog') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ _('Tags') }}</li>
-  </ol>
-</nav>
+{{ macro.breadcrumps(crumbs, 'Теги') }}
 {% endblock %}
 {% block content %}
     <h1>{{ _('Tags') }}</h1>
@@ -22,3 +18,5 @@
         <hr>
     {% endfor %}
 {% endblock %}
+
+

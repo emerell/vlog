@@ -1,12 +1,9 @@
 {% extends 'core/base.tpl' %}
+{% import 'core/macros.tpl' as macro %}
 
 {% block title %}Index{% endblock %}
 {% block sidebar %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">{{ _('Блог') }}</li>
-  </ol>
-</nav>
+{{ macro.breadcrumps(active='Блог') }}
 {% endblock %}
 {% block content %}
     <h1>{{ _('Blog') }}</h1>
@@ -18,13 +15,13 @@
     <hr width="60%">
     <h4>The most commented articles:</h4>
     {% for article in articles %}
-        <h2><a href="/{{ article.id }}/">{{ article.title }}</a></h2>
+        <h2><a href="/categories/{{ article.category.slug}}/articles/{{ article.slug }}/">{{ article.title }}</a></h2>
         <hr>
     {% endfor %}
     <hr width="60%">
     <h4>The most populated tags:</h4>
     {% for tag in tags %}
-        <h2><a href="#">{{ tag.title }}</a></h2>
+        <h2><a href="/tags/{{ tag.slug }}/">{{ tag.title }}</a></h2>
         <hr>
     {% endfor %}
 {% endblock %}

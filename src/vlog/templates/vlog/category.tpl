@@ -8,8 +8,15 @@
 {% block content %}
     <h1>{{ category.title }}</h1>
     <br>
+    <h2>2 most commented articles: </h2>
+    {% for article in top_articles %}
+        <h2><a href="/categories/{{ category.slug}}/articles/{{ article.slug }}/">{{ article.title }}</a></h2>
+        <h4>{{article.description}}</h4>
+        <hr>
+    {% endfor %}
+    <br>
+    <h2>All articles: </h2>
     {% for article in articles %}
         <h2><a href="/categories/{{ category.slug}}/articles/{{ article.slug }}/">{{ article.title }}</a></h2>
-        <hr>
     {% endfor %}
 {% endblock %}

@@ -37,6 +37,10 @@ class Category(Publication):
         null=True
     )
 
+    @classmethod
+    def get_all(cls):
+        return cls.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')
+
     class Meta:
         db_table = 'category'
         verbose_name = _('Category')
@@ -68,8 +72,13 @@ class Article(Publication):
     )
 
     @classmethod
-    def get_top(cls):
-        return cls.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')[:10]
+    def get_all(cls):
+        return cls.objects.annotate(comments_count=Count('comments')).order_by('-comments_count')
+
+    @classmethod
+    def get_from_category(cls, category):
+        return cls.objects.filter(category_id=category.id).annotate(
+            comments_count=Count('comments')).order_by('-comments_count')
 
     class Meta:
         db_table = 'article'
@@ -83,6 +92,10 @@ class Tag(Publication):
         related_name='tags',
         verbose_name=_('Articles')
     )
+
+    @classmethod
+    def get_all(cls):
+        return cls.objects.annotate(articles_count=Count('articles')).order_by('-articles_count')
 
     class Meta:
         db_table = 'tag'

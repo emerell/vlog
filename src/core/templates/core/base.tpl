@@ -17,6 +17,9 @@
             {% block content %}
             {% endblock %}
         </div>
+        {% block footer %}
+            {% include 'core/footer.tpl' %}
+        {% endblock %}
     </body>
     <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 </html>
