@@ -19,4 +19,7 @@
     {% for article in articles %}
         <h2><a href="/categories/{{ category.slug}}/articles/{{ article.slug }}/">{{ article.title }}</a></h2>
     {% endfor %}
+    {% block pagination %}
+            {% include 'vlog/category_pagination.tpl' %}
+    {% endblock %}
 {% endblock %}
