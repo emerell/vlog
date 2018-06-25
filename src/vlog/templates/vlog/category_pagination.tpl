@@ -2,7 +2,7 @@
         <span class="step-links">
             {% if articles.has_previous %}
                 <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ articles.previous_page_number }}">previous</a>
+                <a href="?page={{ articles.previous_page_number }}">{{ _('previous') }}</a>
             {% endif %}
 
             <span class="current">

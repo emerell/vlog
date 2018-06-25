@@ -8,5 +8,5 @@
 {% block content %}
     <h1>{{ article.title }}</h1>
     <br>
-     <p>{{ article.content|safe }}</p>
+    <p>{{ article.content|safe }}</p>
 {% endblock %}

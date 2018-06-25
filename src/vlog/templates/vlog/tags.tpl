@@ -1,9 +1,8 @@
 {% extends 'core/base.tpl' %}
 {% import 'core/macros.tpl' as macro %}
-
-{% block title %}Tags{% endblock %}
+{% block title %}{{ _('Tags') }}{% endblock %}
 {% block sidebar %}
-{{ macro.breadcrumps(crumbs, 'Теги') }}
+{{ macro.breadcrumps(crumbs, _('Tags')) }}
 {% endblock %}
 {% block content %}
     <h1>{{ _('Tags') }}</h1>
@@ -12,7 +11,7 @@
         <h4><a href="/tags/{{ tag.slug }}/">{{ tag.title }}</a></h4>
         <hr>
     {% endfor %}
-    <h2>3 most commented articles: </h2>
+    <h2>{{ _('3 most commented articles:') }}</h2>
     {% for article in articles %}
         <h4>{{ article.title }}</h4>
         <hr>

@@ -27,7 +27,7 @@ class CategoriesView(BaseView):
         context = super().get_context_data(**kwargs)
 
         crumbs = [
-            {'url': reverse('vlog:index'), 'title': _('Блог')}
+            {'url': reverse('vlog:index'), 'title': _('Blog')}
         ]
 
         context.update({
@@ -45,14 +45,14 @@ class CategoryView(BaseView):
         context = super().get_context_data(**kwargs)
 
         crumbs = [
-            {'url': reverse('vlog:index'), 'title': _('Блог')},
-            {'url': reverse('vlog:categories'), 'title': _('Категории')}
+            {'url': reverse('vlog:index'), 'title': _('Blog')},
+            {'url': reverse('vlog:categories'), 'title': _('Categories')}
         ]
 
         category = get_object_or_404(Category, slug=slug)
 
         article_list = Article.get_from_category(category)
-        paginator = Paginator(article_list, 2)  # Show 2 contacts per page
+        paginator = Paginator(article_list, 2)  # Show 2 articles per page
 
         page = request.GET.get('page')
         articles = paginator.get_page(page)
@@ -74,8 +74,8 @@ class ArticlesView(BaseView):
         context = super().get_context_data(**kwargs)
 
         crumbs = [
-            {'url': reverse('vlog:index'), 'title': _('Блог')},
-            {'url': reverse('vlog:categories'), 'title': _('Категории')}
+            {'url': reverse('vlog:index'), 'title': _('Blog')},
+            {'url': reverse('vlog:categories'), 'title': _('Categories')}
         ]
 
         context.update({
@@ -95,9 +95,9 @@ class ArticleView(BaseView):
         article = get_object_or_404(Article, slug=article_slug)
 
         crumbs = [
-            {'url': reverse('vlog:index'), 'title': _('Блог')},
-            {'url': reverse('vlog:categories'), 'title': _('Категории')},
-            {'url': reverse('vlog:articles'), 'title': _('Статьи')}
+            {'url': reverse('vlog:index'), 'title': _('Blog')},
+            {'url': reverse('vlog:categories'), 'title': _('Categories')},
+            {'url': reverse('vlog:articles'), 'title': _('Articles')}
         ]
 
         context.update({
@@ -116,7 +116,7 @@ class TagsView(BaseView):
         context = super().get_context_data(**kwargs)
 
         crumbs = [
-            {'url': reverse('vlog:index'), 'title': _('Блог')},
+            {'url': reverse('vlog:index'), 'title': _('Blog')},
         ]
         context.update({
             'tags': Tag.get_all(),
@@ -134,8 +134,8 @@ class TagView(BaseView):
         context = super().get_context_data(**kwargs)
 
         crumbs = [
-            {'url': reverse('vlog:index'), 'title': _('Блог')},
-            {'url': reverse('vlog:tags'), 'title': _('Теги')}
+            {'url': reverse('vlog:index'), 'title': _('Blog')},
+            {'url': reverse('vlog:tags'), 'title': _('Tags')}
         ]
 
         tag = get_object_or_404(Tag, slug=slug)
@@ -146,5 +146,3 @@ class TagView(BaseView):
         })
 
         return self.render_to_response(context)
-
-

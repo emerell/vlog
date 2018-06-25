@@ -15,6 +15,7 @@ class Publication(BaseModel):
 
     slug = models.CharField(
         max_length=150,
+        unique=True,
         blank=True,
         verbose_name=_('Slug')
     )
@@ -32,6 +33,9 @@ class Category(Publication):
         related_name='categories',
         verbose_name=_('Author'),
         on_delete=models.SET_NULL,
+        null=True
+    )
+    image = models.ImageField(
         null=True
     )
 

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.core.files import File
 from vlog import models
-from vlog import views
 from vlog import forms
 
 
@@ -13,8 +13,16 @@ class TransliterationTest(TestCase):
 
     def test_transliteration(self):
         cat_form = forms.CategoryForm(
-            {'title': 'спорт', 'author': self.user.pk}
+            {'title': 'спорт', 'author': self.user.pk, 'image': None}
         )
+
+        # cat_form.image = File(open("../../vlog/media/dv.jpg"))
+        # cat_form.save()
+
+        # import ipdb
+        # ipdb.set_trace()
+
+        cat_form.save()
 
         cat = None
 
