@@ -8,7 +8,7 @@
     <h1>{{ _('Tags') }}</h1>
     <br>
     {% for tag in tags %}
-        <h4><a href="/tags/{{ tag.slug }}/">{{ tag.title }}</a></h4>
+        <h4><a href="{{ url('vlog:tag', tag.slug ) }}">{{ tag.title }}</a></h4>
         <hr>
     {% endfor %}
     <h2>{{ _('3 most commented articles:') }}</h2>

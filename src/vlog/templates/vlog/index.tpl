@@ -21,9 +21,7 @@
     <hr width="60%">
     <h4>{{ _('The most populated tags:') }}</h4>
     {% for tag in tags %}
-        <h2><a href="/tags/{{ tag.slug }}/">{{ tag.title }}</a></h2>
+        <h2><a href="{{ url('vlog:tag', tag.slug ) }}">{{ tag.title }}</a></h2>
         <hr>
     {% endfor %}
 {% endblock %}
-
-<!--{{ url('vlog:tag', tag.slug ) }}-->

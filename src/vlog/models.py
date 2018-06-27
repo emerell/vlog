@@ -36,7 +36,8 @@ class Category(Publication):
         null=True
     )
     image = models.ImageField(
-        null=True
+        null=True,
+        blank=True
     )
 
     @classmethod
