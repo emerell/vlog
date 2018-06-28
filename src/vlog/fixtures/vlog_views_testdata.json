@@ -1,38 +1,101 @@
 [
     {
         "model": "vlog.category",
-        "category_id": 1,
+        "pk": 1,
         "fields": {
           "title": "Sport",
           "slug": "sport",
           "author_id": "1",
-          "created": "2018-04-09 23:44:02",
-          "updated": "2018-04-09 23:44:04",
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03",
           "image": null
         }
     },
     {
         "model": "vlog.category",
-        "category_id": 2,
+        "pk": 2,
         "fields": {
           "title": "Food",
           "slug": "food",
           "author_id": "1",
-          "created": "2018-04-09 20:44:02",
-          "updated": "2018-04-09 21:44:02",
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03",
           "image": null
         }
     },
     {
         "model": "vlog.category",
-        "category_id": 3,
+        "pk": 3,
         "fields": {
           "title": "Art",
           "slug": "art",
           "author_id": "1",
-          "created": "2018-04-10 20:44:02",
-          "updated": "2018-04-10 21:44:05",
-          "image": null
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03",
+          "image": "../../media/art.jpg"
+        }
+    },
+    {
+        "model": "vlog.tag",
+        "tag_id": 1,
+        "fields": {
+          "title": "tag1",
+          "slug": "tag1",
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03"
+        }
+    },
+      {
+        "model": "vlog.tag",
+        "tag_id": 2,
+        "fields": {
+          "title": "tag2",
+          "slug": "tag2",
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03"
+        }
+    },
+    {
+        "model": "vlog.tag",
+        "tag_id": 3,
+        "fields": {
+          "title": "tag3",
+          "slug": "tag3",
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03"
+        }
+    },
+    {
+        "model": "vlog.comment",
+        "comment_id": 1,
+        "fields": {
+          "text": "Very important comment",
+          "article": 1,
+          "author_id": 1,
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03"
+        }
+    },
+    {
+        "model": "vlog.comment",
+        "comment_id": 2,
+        "fields": {
+          "text": "Very important comment 2",
+          "article": 2,
+          "author_id": 2,
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03"
+        }
+    },
+    {
+        "model": "vlog.comment",
+        "comment_id": 3,
+        "fields": {
+          "text": "Very important comment 3",
+          "article": 3,
+          "author": 1,
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03"
         }
     },
     {
@@ -63,12 +126,12 @@
           "is_active": true,
           "is_superuser": false,
           "is_staff": true,
-          "last_login": "2008-09-05 12:40:45",
+          "last_login": "2018-06-23 23:44:21.093976+03",
           "groups": [],
           "user_permissions": [],
           "password": "sha1$5c9e6$d41737339d5e09e587f0ed711095fed093ba49b0",
           "email": "staff@example.com",
-          "date_joined": "2012-09-05 12:40:45"}
+          "date_joined": "2018-06-23 23:44:21.093976+03"}
     },
     {
         "pk": 2,
@@ -80,12 +143,54 @@
           "is_active": true,
           "is_superuser": false,
           "is_staff": false,
-          "last_login": "2008-09-05 12:41:19",
+          "last_login": "2018-06-23 23:44:21.093976+03",
           "groups": [], "user_permissions": [],
           "password": "sha1$0f040$bf06a328b5c07872f799ba0fdde3a13ac7105be0",
           "email": "user0@example.com",
-          "date_joined": "2012-09-05 12:41:19"
+          "date_joined": "2018-06-23 23:44:21.093976+03"
         }
-    }
+    },
+    {
+        "model": "vlog.article",
+        "article_id": 1,
+        "fields": {
+          "title": "About sport",
+          "slug": "about-sport",
+          "author_id": 1,
+          "category_id": 1,
+          "description": "Sport description",
+          "content": "Content about sport",
+          "created": "2018-06-23 23:44:21.093976+03",
+          "updated": "2018-06-23 23:44:21.093976+03"
+        }
+    },
+    {
+          "model": "vlog.article",
+          "article_id": 2,
+          "fields": {
+            "title": "About food",
+            "slug": "about-food",
+            "author_id": 2,
+            "category_id": 2,
+            "description": "Food description",
+            "content": "Content about food",
+            "created": "2018-06-23 23:44:21.093976+03",
+            "updated": "2018-06-23 23:44:21.093976+03"
+          }
+      },
+    {
+          "model": "vlog.article",
+          "article_id": 3,
+          "fields": {
+            "title": "About art",
+            "slug": "about-art",
+            "author_id": 1,
+            "category_id": 3,
+            "description": "Art description",
+            "content": "Content about art",
+            "created": "2018-06-23 23:44:21.093976+03",
+            "updated": "2018-06-23 23:44:21.093976+03"
+          }
+      }
 
 ]
