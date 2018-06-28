@@ -1,58 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from io import BytesIO
-from django.test import Client
-from PIL import Image
 from vlog.models import Article, Category, Comment, Tag
-from vlog import forms
-import datetime
-from django.urls import reverse
-
-
-class TransliterationTest(TestCase):
-    def setUp(self):
-        self.user = get_user_model().objects.create(
-            username='user', password='qwerty123'
-        )
-
-    def test_transliteration(self):
-        im_io = BytesIO()
-        im = Image.new(mode='RGB', size=(200, 200))
-        im.save(im_io, 'JPEG')
-
-        cat_form = forms.CategoryForm(
-            {
-                'title': 'спорт',
-                'author': self.user.pk,
-                'image': InMemoryUploadedFile(
-                    im_io, None, 'random.jpg', 'image/jpeg', len(im_io.getvalue()), None
-                )
-            }
-        )
-
-        if cat_form.is_valid():
-            cat = cat_form.save()
-
-        self.assertEqual(cat.slug, 'sport')
-
-        cat_form = forms.CategoryForm(
-            {'title': 'тест'}, instance=cat
-        )
-
-        if cat_form.is_valid():
-            cat = cat_form.save()
-
-        self.assertEqual(cat.slug, 'test')
-
-        cat_form = forms.CategoryForm(
-            {'title': 'Breaking News! Новости.'}, instance=cat
-        )
-
-        if cat_form.is_valid():
-            cat = cat_form.save()
-
-        self.assertEqual(cat.slug, 'breaking-news-novosti')
 
 
 class BaseTest(TestCase):
@@ -61,14 +9,14 @@ class BaseTest(TestCase):
             username='user', password='qwerty123'
         )
 
-        category = Category.objects.create(
+        Category.objects.create(
             id="1",
             title="tests",
             slug="tests",
             author=self.user
         )
 
-        article = Article.objects.create(
+        Article.objects.create(
             id="7",
             title="Tests in Django",
             slug="tests-in-django",
@@ -171,13 +119,3 @@ class TagModelTest(BaseTest):
     def test_tag_slug(self):
         tag = Tag.objects.get(id=1)
         self.assertEqual(tag.slug, 'test')
-
-
-class PollsViewsTestCase(TestCase):
-    def setUp(self):
-        self.client = Client()
-
-    def test_details(self):
-        # c = Client()
-        response = self.client.post('/login/', {'username': 'john', 'password': 'smith'})
-        self.assertEqual(response.status_code, 200)
