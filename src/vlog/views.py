@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import gettext as _
 from core.views import BaseView
 from vlog.models import Category, Article, Tag
@@ -52,10 +52,14 @@ class CategoryView(BaseView):
         category = get_object_or_404(Category, slug=slug)
 
         article_list = Article.get_from_category(category)
-        paginator = Paginator(article_list, 2)  # Show 2 articles per page
-
         page = request.GET.get('page')
-        articles = paginator.get_page(page)
+        paginator = Paginator(article_list, 2)  # Show 2 articles per page
+        try:
+            articles = paginator.get_page(page)
+        except PageNotAnInteger:
+            articles = paginator.page(1)
+        except EmptyPage:
+            articles = paginator.page(paginator.num_pages)
 
         context.update({
             'category': category,
