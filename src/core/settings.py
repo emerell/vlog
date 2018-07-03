@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'django_jinja',
 
     'core',
-    'vlog'
+    'vlog',
+
+    'rest_framework',
+    'endpoint.apps.EndpointConfig',
 ]
 
 

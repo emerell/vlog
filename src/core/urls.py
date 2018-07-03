@@ -23,8 +23,11 @@ urlpatterns = [
     re_path(r'^login/$', LoginView.as_view(template_name='core/login.tpl'), name='login'),
     re_path(r'^logout/$', LogoutView.as_view(), name='logout'),
     re_path(r'', include(('vlog.urls', 'vlog'), namespace='vlog')),
-]
+    re_path(r'^api/(?P<version>(v1|v2))/', include(('endpoint.urls', 'endpoint'), namespace='endpoint')),
 
+]
+# re_path(r'^api/(?P<version>(v1|v2))/', include('endpoint.urls'), namespace='endpoint'),
+# re_path(r'', include(('endpoint.urls', 'endpoint'), namespace='endpoint')),
 #: TODO: While development. Code below is pretty fucking far from ok.
 from django.conf import settings
 from django.conf.urls.static import static
