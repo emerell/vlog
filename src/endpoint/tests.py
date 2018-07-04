@@ -57,17 +57,12 @@ class CategoriesTest(BaseViewTest):
         self.assertEqual(response.data, serialized.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_get_category(self):
-    #     # hit the API endpoint
-    #     response = self.client.get(
-    #         reverse("endpoint:category", kwargs={"slug": "sport", "version": "v1"})
-    #     )
-    #     # fetch the data from db
-    #     expected = Category.objects.get(slug="sport")
-    #
-    #     serialized = CategorySerializer(expected, many=True)
-    #     self.assertEqual(response.data, serialized.data)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_get_category(self):
+        response = self.client.get(
+            reverse("endpoint:category", kwargs={"slug": "sport", "version": "v1"})
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class ArticlesTest(BaseViewTest):
@@ -79,6 +74,13 @@ class ArticlesTest(BaseViewTest):
         expected = Article.objects.all()
         serialized = ArticleSerializer(expected, many=True)
         self.assertEqual(response.data, serialized.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_article(self):
+        response = self.client.get(
+            reverse("endpoint:article", kwargs={"slug": "about-sport", "version": "v1"})
+        )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 

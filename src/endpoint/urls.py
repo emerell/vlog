@@ -4,8 +4,9 @@ from endpoint import views
 
 urlpatterns = [
     re_path(r'^categories/$', views.CategoryList.as_view(), name='categories'),
-    # re_path(r"^categories/(?P<slug>[\w-]+[']*)/$", views.CategoryDetail.as_view(), name='category'),
+    re_path(r"^categories/(?P<slug>[\w-]+[']*)/$", views.CategoryDetail.as_view(), name='category'),
     re_path(r'^articles/$', views.ArticleList.as_view(), name='articles'),
+    re_path(r"^articles/(?P<slug>[\w-]+[']*)/$", views.ArticleDetail.as_view(), name='article'),
     re_path(r'^tags/$', views.TagList.as_view(), name='tags'),
 ]
 
