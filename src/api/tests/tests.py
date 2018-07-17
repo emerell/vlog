@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
 from vlog.models import Category, Article, Tag
-from .serializers import CategorySerializer, ArticleSerializer, TagSerializer
+from api.serializers import CategorySerializer, ArticleSerializer, TagSerializer
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
@@ -14,8 +14,7 @@ class BaseViewTest(APITestCase):
     def create_category(id, title, slug, image, author_id):
         Category.objects.create(
             id=id, title=title, slug=slug, created=timezone.now(),
-            updated=timezone.now(), image=image, author_id=author_id)
-
+ls
     @staticmethod
     def create_article(id, title, slug, author_id, category_id, description="", content=""):
         Article.objects.create(

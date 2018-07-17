@@ -1,5 +1,5 @@
 from vlog.models import Category, Article, Tag
-from endpoint.serializers import CategorySerializer, ArticleSerializer, TagSerializer
+from api.serializers import CategorySerializer, ArticleSerializer, TagSerializer
 from rest_framework import generics
 from rest_framework import permissions
 

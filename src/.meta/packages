@@ -1,6 +1,7 @@
 coverage==4.5.1
 Django==2.0.6
 django-ckeditor==5.5.0
+django-debug-toolbar==1.9.1
 django-jinja==2.4.1
 djangorestframework==3.8.2
 ipdb==0.11

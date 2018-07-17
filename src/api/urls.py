@@ -1,6 +1,6 @@
 from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
-from endpoint import views
+from api import views
 
 urlpatterns = [
     re_path(r'^categories/$', views.CategoryList.as_view(), name='categories'),
