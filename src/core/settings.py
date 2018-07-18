@@ -200,43 +200,53 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 
+
+from debug_toolbar.panels.logging import collector
+
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
-        'standard': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        'large': {
+            'format': '%(asctime)s %(levelname)s %(process)d %(pathname)s %(funcName)s %(lineno)d %(message)s'
         },
+        'tiny': {
+            'format': '%(asctime)s %(message)s'
+        }
     },
     'handlers': {
-        'null': {
-            'level':'DEBUG',
-            'class':'logging.NullHandler',
+        'errors_file': {
+            'level':'ERROR',
+            'class':'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'interval':1,
+            'filename':'logs/ErrorLoggers.log',
+            'formatter':'large',
         },
-        'logfile': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR + "/logfile",
-            'maxBytes': 50000,
-            'backupCount': 2,
-            'formatter': 'standard',
-        },
-        'console':{
+        'info_file': {
             'level':'INFO',
-            'class':'logging.StreamHandler',
-            'formatter': 'standard'
+            'class':'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'interval':1,
+            'filename':'logs/InfoLoggers.log',
+            'formatter':'large',
         },
+        'djdt_log': {
+            'level': 'DEBUG',
+            'class': 'debug_toolbar.panels.logging.ThreadTrackingHandler',
+            'collector': collector,
+        },
+
     },
     'loggers': {
-        'django': {
-            'handlers':['console'],
-            'propagate': True,
-            'level':'WARN',
+        'error_logger': {
+            'handlers':['errors_file'],
+            'level':'WARNING',
+            'propagate': False,
         },
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
+        'info_logger': {
+            'handlers': ['info_file', 'djdt_log'],
+            'level': 'INFO',
             'propagate': False,
         },
     }

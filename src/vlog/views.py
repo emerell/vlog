@@ -4,12 +4,18 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import gettext as _
 from core.views import BaseView
 from vlog.models import Category, Article, Tag
+import logging
 
 
 class IndexView(BaseView):
     template_name = 'vlog/index.tpl'
 
     def get(self, request, *args, **kwargs):
+
+        # LOGGING
+        # logging.getLogger("error_logger").error("Hi, I am here")
+        # logging.getLogger("info_logger").info("Hi, this is info")
+
         context = super().get_context_data(**kwargs)
 
         context.update({
